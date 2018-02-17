@@ -19,3 +19,8 @@ stages:
       - npm install -g serverless
       - npm install
       - serverless deploy
+
+jobs:
+  include:
+    - stage: test
+    - stage: deploy
