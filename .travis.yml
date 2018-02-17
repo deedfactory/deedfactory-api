@@ -1,7 +1,25 @@
 language: python
 python:
-  - "3.6"
+- '3.6'
+
 install:
-  - pip install -r requirements.txt -r requirements_dev.txt
-script:
-  - pytest test_app.py
+- pip install -r requirements.txt -r requirements_dev.txt
+
+env:
+  global:
+    - MOO: moo
+    - secure: dejjfqSFTjUfDd5f33LLyIrhNG6qj56+zMgxErwjErsjkAUprRgB1lr2A/S4xiL5zciHdvCS2fizTzrHGCMyaGfT36OBcVh1PjlgpsGUmAPWfCn8Oq0leY0MDtKMidTD02vqWsVb9xH92Lm1Bpd44m6R1ZoJUwB9Ab1UlNRPgDqIM9STotDmx99yMt8lsRleqrhesjJq+YK98Ff2YntsouRNQOllEGf4zLed1CnfJbBsodD9idhdC+O2643JnTAhVbMGx8gvHJyUU07b1clGP7uY4NquIWcoskTw6u/7v4oCMnSwbQwsSu0T1T+dLtH5yxc1cJK6eQ1Q+sl+eVYGQ89Cl8LdlIwtGHIzInt6PA+nfxQT5eqAOV16hsSI1rhTPztHOcDRWMOrfiWuWf02lPtLzOyAV6Ou0lhjgi0QVfnZcgLqmqnTR6tPf4OaO/qhSZ+4hGC5iMe28YYAz1BQbjEW1t6B8sZwZz1ODkA6NZaH+ipvfDfuOVnl4KiiPQ7xeanXPlwA7MHzp5ucOPhplQ0HxEj79NHvjC8LFtZbfZwaofFwxM44sLP39qsMTYZn+GlDoARYEnvTcgjPT6TGHeA5l+WwPTeyFSUO5AyO0Kkpv4zS9s29hA0Noivny0c6ynIIEgM5hUzkSY12+UMI/qm9YT2hvmMe8Or6D3Wnio8=
+    - secure: dRsNWHufKk/eWxBkRzs71qBg7n//99MDkGQyTxXuZPggCHBz50V9iICx3+r1j6Eh87ZLRlPQM9kDv4o8+EaocZts39Vjy+1X38oVTcPwU4EhlqnMhMx7axR2sAQK0GvHF5ORKAzS+ng+POQFNBZEvXuK8ZQ2x5uuvP3kfTi4pdb6uEzaMiFjP1OV779FAICw2b/X3UglvkI6tA+9ywb9YQ6RAcYan9SxLMVvQjhtUDPCxAv27Tt390/qIOjDUa+AX50PeJrEDdZIHFr/Dyhz326g/WTGHFEUwWiW8gNXLriW53wsKhsLQfBnS20OhHX0l2DLkLwFNLWM37tpkTx1Mnrlj0nBThE60TfKmeqIwWkJvRkQGz+mzinOKVeqWvDuFgCYJtwnlUFfVws33TmytxLPXtRpIdrFDnzmywumF+E0BMZJ1T3SsJvRABDJjB4WqdNvSQ+iHM8CFOcr3BCm54Gh1sg5dkeceGzc/HwZaqexnqyzHrLqLPZYvRooUY5AN1qfKchN+saoOm6Ye3E6awOsptioWUzuHpst8qVPsLIlbn/XBBNGFA2JJaqq4auQIk7b3PeOO3m24cHxdAum97s/lORY3wXZ7WEUw+XuufjkP5vPClngLyUBAE4mMcQVpVMxn29pbu1zGvkGedSQ/H1pBY2q4dU517EdozvXvIk=
+
+jobs:
+  include:
+    - stage: test
+      script:
+        - pytest test_app.py
+    - stage: deploy
+      if: branch = master
+      script:
+        - nvm install --lts
+        - npm install -g serverless
+        - npm install
+        - serverless deploy
