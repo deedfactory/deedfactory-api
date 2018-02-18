@@ -22,7 +22,8 @@ ADD . /workspace/
 
 RUN apt-get update && \
   apt-get install -y python-pip && \
-  pip install -r /workspace/requirements.txt -r /workspace/requirements_dev.txt
+  pip install -r /workspace/requirements.txt -r /workspace/requirements_dev.txt && \
+  npm install
 
 WORKDIR /workspace
 VOLUME /workspace

@@ -1,0 +1,16 @@
+version: "3"
+services:
+  deedfactory-api:
+    build: ./
+    environment:
+      - FLASK_APP=/workspace/app.py
+    ports:
+      - "5000:5000"
+    links:
+      - geth
+  geth:
+    image: ethereum/client-go
+    ports:
+      - "8545:8545"
+      - "30303:30303"
+    command: --rpc --rpcaddr "0.0.0.0" --testnet
